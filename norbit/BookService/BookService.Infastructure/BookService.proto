@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package book;
+
+import "google/protobuf/timestamp.proto";
+
+message Book {
+  int64 id = 1;
+  string title = 2;
+  string author = 3;
+  float price = 4;
+  string genre = 5;
+  google.protobuf.Timestamp publication_date = 6;
+  string description = 7;
+  string cover_image_url = 8;
+  int32 amount = 9;
+}
+
+message GetAllBooksRequest {}
+
+message GetAllBooksResponse {
+  repeated Book books = 1;
+}
+
+message GetBookByIdRequest {
+  int64 id = 1;
+}
+
+message GetBookByIdResponse {
+  Book book = 1;
+}
+
+message GetBookByTitleRequest {
+  string title = 1;
+}
+
+message GetBookByTitleResponse {
+  Book book = 1;
+}
+
+message CreateBookRequest {
+  Book book = 1;
+}
+
+message CreateBookResponse {
+  Book book = 1;
+}
+
+message UpdateBookRequest {
+  Book book = 1;
+}
+
+message UpdateBookResponse {
+  Book book = 1;
+}
+
+message DeleteBookRequest {
+  int64 id = 1;
+}
+
+message DeleteBookResponse {
+  Book book = 1;
+}
+
+service BookService {
+  rpc GetAllBooks(GetAllBooksRequest) returns (GetAllBooksResponse);
+  rpc GetBookById(GetBookByIdRequest) returns (GetBookByIdResponse);
+  rpc GetBookByTitle(GetBookByTitleRequest) returns (GetBookByTitleResponse);
+  rpc CreateBook(CreateBookRequest) returns (CreateBookResponse);
+  rpc UpdateBook(UpdateBookRequest) returns (UpdateBookResponse);
+  rpc DeleteBook(DeleteBookRequest) returns (DeleteBookResponse);
+}

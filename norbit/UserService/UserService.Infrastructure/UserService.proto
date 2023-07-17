@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package userservice;
+
+import "google/protobuf/timestamp.proto";
+
+message User {
+  int64 id = 1;
+  string login = 2;
+  string password = 3;
+  string first_name = 4;
+  string last_name = 5;
+  string email_address = 6;
+}
+
+message GetAllUsersRequest {}
+
+message GetAllUsersResponse {
+  repeated User users = 1;
+}
+
+message GetUserByIdRequest {
+  int64 id = 1;
+}
+
+message GetUserByIdResponse {
+  User user = 1;
+}
+
+message CreateUserRequest {
+  User user = 1;
+}
+
+message CreateUserResponse {
+  User user = 1;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message UpdateUserResponse {
+  User user = 1;
+}
+
+message DeleteUserRequest {
+  int64 id = 1;
+}
+
+message DeleteUserResponse {
+  User user = 1;
+}
+
+service UserService {
+  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+  rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}

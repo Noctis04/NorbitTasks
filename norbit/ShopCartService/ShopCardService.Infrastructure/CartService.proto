@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package shopcart;
+
+message CartItem {
+  int64 productId = 1;
+  string name = 2;
+  int32 price = 3;
+  int32 quantity = 4;
+}
+
+message Cart {
+  int64 id = 1;
+  int64 userId = 2;
+  repeated CartItem items = 3;
+}
+
+message GetCartByUserIdRequest {
+  int64 userId = 1;
+}
+
+message GetCartByUserIdResponse {
+  Cart cart = 1;
+}
+
+message AddCartItemRequest {
+  int64 cartId = 1;
+  CartItem item = 2;
+}
+
+message AddCartItemResponse {
+  CartItem addedItem = 1;
+}
+
+message UpdateCartItemRequest {
+  int64 cartId = 1;
+  CartItem item = 2;
+}
+
+message UpdateCartItemResponse {
+  CartItem updatedItem = 1;
+}
+
+message RemoveCartItemRequest {
+  int64 cartId = 1;
+  int64 itemId = 2;
+}
+
+message RemoveCartItemResponse {
+  int64 removedItemId = 1;
+}
+
+message ClearCartRequest {
+  int64 cartId = 1;
+}
+
+message ClearCartResponse {
+  int64 cartId = 1;
+}
+
+message GetTotalPriceRequest {
+  int64 cartId = 1;
+}
+
+message GetTotalPriceResponse {
+  int32 totalPrice = 1;
+}
+
+service CartService {
+  rpc GetCartByUserId(GetCartByUserIdRequest) returns (GetCartByUserIdResponse);
+  rpc AddCartItem(AddCartItemRequest) returns (AddCartItemResponse);
+  rpc UpdateCartItem(UpdateCartItemRequest) returns (UpdateCartItemResponse);
+  rpc RemoveCartItem(RemoveCartItemRequest) returns (RemoveCartItemResponse);
+  rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);
+  rpc GetTotalPrice(GetTotalPriceRequest) returns (GetTotalPriceResponse);
+}

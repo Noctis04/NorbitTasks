@@ -1,0 +1,86 @@
+version: '3.9'
+services:
+  user-service:
+    build: 
+      context: UserService/
+      dockerfile: Dockerfile
+    ports:
+      - "5555:80"
+    links:
+      - user_db
+    depends_on:
+      - user_db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - CONNECTION_STRING=Host=user_db;Username=postgres;Password=password;Database=userDatabase;
+
+  user_db:
+    image: postgres:14-alpine
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_DB=userDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - user-db-volume:/var/lib/postgresql/data
+      
+  book-service:
+    build: 
+      context: BookService/
+      dockerfile: Dockerfile
+    ports:
+      - "5556:80"
+    links:
+      - book_db
+    depends_on:
+      - book_db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - CONNECTION_STRING=Host=book_db;Username=postgres;Password=password;Database=bookDatabase;
+
+  book_db:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=bookDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - book-db-volume:/var/lib/postgresql/data
+  cart-service:
+    build: 
+      context: ShopCartService/
+      dockerfile: Dockerfile
+    ports:
+      - "5557:80"
+    links:
+      - cart_db
+    depends_on:
+      - cart_db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - CONNECTION_STRING=Host=cart_db;Username=postgres;Password=password;Database=cartDatabase;
+      
+  cart_db:
+    image: postgres:14-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=cartDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - cart-db-volume:/var/lib/postgresql/data
+
+volumes:
+  user-db-volume:
+    driver: local  
+  book-db-volume:
+    driver: local  
+  cart-db-volume:
+    driver: local  
