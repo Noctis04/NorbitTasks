@@ -29,4 +29,17 @@
     <ProjectReference Include="..\ShopCartService.Domain\ShopCartService.Domain.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="..\ShopCardService.Infrastructure\Protos\CartService.proto" GrpcServices="Client" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.23.1" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.55.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.55.1">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+
 </Project>

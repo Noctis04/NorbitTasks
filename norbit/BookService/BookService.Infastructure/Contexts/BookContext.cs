@@ -15,8 +15,5 @@ public sealed class BookContext : DbContext
     {
         Database.Migrate();
     }
-   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=user_db;User Id=postgres;Password=password;");
-    }
+   
 }

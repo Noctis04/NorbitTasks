@@ -5,6 +5,7 @@ namespace UserService.Infrastructure.Managers;
 
 public class UserManager : IUserManager
 {
+    public static long UserId;
     private readonly UserContext _context;
     public UserManager(UserContext context)
     {
@@ -20,11 +21,24 @@ public class UserManager : IUserManager
     {
         return _context.Users.FirstOrDefault(x => x.Id == id);
     }
+    public long GetUserId(long userId)
+    {
+        userId = UserId;
+        var existingUser = _context.Users.FirstOrDefault(x => (x.Id == userId));
+
+        if (existingUser is null)
+            return 0;
+        else
+           return existingUser.Id;
+    }
     public User Create(User user)
     {
         var entry = _context.Add(user);
         _context.SaveChanges();
+        UserId = user.Id;
         return entry.Entity;
+        
+
     }
     public User? Update(User user)
     {

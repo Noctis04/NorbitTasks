@@ -1,5 +1,5 @@
 ﻿using UserService.Domain.Entity;
-
+using UserService.Infrastructure.Managers;
 namespace UserService.Host.Routes;
 
 public static class UserRouter

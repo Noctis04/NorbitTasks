@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Proto\CartService.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
     <PackageReference Include="Grpc.Core.Api" Version="2.55.0" />
     <PackageReference Include="Grpc.Tools" Version="2.56.0">
@@ -27,6 +31,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BookService.Domain\BookService.Domain.csproj" />
     <ProjectReference Include="..\BookService.Infastructure\BookService.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Proto\CartService.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ namespace BookService.Infastructure.Managers;
 public class BookManager : IBookManager
 {
     private readonly BookContext _context;
-
+    public static Book idbook;
     public BookManager(BookContext context)
     {
         _context = context;
@@ -19,8 +19,14 @@ public class BookManager : IBookManager
 
     public Book? GetById(long id)
     {
-        return _context.Books.FirstOrDefault(x => x.Id == id);
+        var existingBook = _context.Books.FirstOrDefault(x => x.Id == id);
+        if (existingBook is null)
+            return idbook;
+        else
+            idbook = existingBook;
+            return existingBook;
     }
+  
     public Book? GetByTitle(string title)
     {
         return _context.Books.FirstOrDefault(x => x.Title == title);

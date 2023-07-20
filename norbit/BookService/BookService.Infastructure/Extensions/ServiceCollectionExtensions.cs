@@ -9,42 +9,25 @@ namespace BookService.Infastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    ///     Добавляем бизнес-логику приложения
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    public static IServiceCollection AddBusinessLogic(this IServiceCollection services, IConfiguration configuration)
+
+    public static IServiceCollection AddBusinessLogic(this IServiceCollection services, IConfiguration configuration, string connectionString)
     {
         services.AddManagers();
-        services.AddDatabase(configuration);
+        services.AddDatabase(connectionString);
         return services;
     }
 
-    /// <summary>
-    ///     Добавление менеджеров данных.
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
+
     private static IServiceCollection AddManagers(this IServiceCollection services)
     {
         services.AddScoped<IBookManager, BookManager>();
         return services;
     }
 
-    // <summary>
-    ///     Добавление Базы Данных.
-    /// </summary>
-    /// <param name="services"><see cref="IServiceCollection"/></param>
-    /// <param name="configuration"><see cref="IConfiguration"/></param>
-    /// <returns><see cref="IServiceCollection"/></returns>
-    private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddDbContext<BookContext>(builder =>
-            builder.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection")));
 
+    private static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
+    {
+        services.AddDbContext<BookContext>(builder => builder.UseNpgsql(connectionString));
         return services;
     }
 }
